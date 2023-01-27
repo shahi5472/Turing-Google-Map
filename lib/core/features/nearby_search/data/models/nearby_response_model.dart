@@ -1,10 +1,18 @@
-class MapModel {
-  MapModel({
+import 'dart:convert';
+
+NearbyResponseModel nearbyResponseModelFromJson(String str) => NearbyResponseModel.fromJson(json.decode(str));
+
+String nearbyResponseModelToJson(NearbyResponseModel data) => json.encode(data.toJson());
+
+class NearbyResponseModel {
+  NearbyResponseModel({
+    this.nextPageToken,
     this.results,
     this.status,
   });
 
-  MapModel.fromJson(dynamic json) {
+  NearbyResponseModel.fromJson(dynamic json) {
+    nextPageToken = json['next_page_token'];
     if (json['results'] != null) {
       results = [];
       json['results'].forEach((v) {
@@ -14,11 +22,13 @@ class MapModel {
     status = json['status'];
   }
 
+  String? nextPageToken;
   List<Results>? results;
   String? status;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['next_page_token'] = nextPageToken;
     if (results != null) {
       map['results'] = results?.map((v) => v.toJson()).toList();
     }
@@ -27,68 +37,123 @@ class MapModel {
   }
 }
 
+Results resultsFromJson(String str) => Results.fromJson(json.decode(str));
+
+String resultsToJson(Results data) => json.encode(data.toJson());
+
 class Results {
   Results({
-    this.addressComponents,
-    this.formattedAddress,
     this.geometry,
-    this.partialMatch,
+    this.icon,
+    this.iconBackgroundColor,
+    this.iconMaskBaseUri,
+    this.name,
+    this.photos,
     this.placeId,
+    this.reference,
+    this.scope,
     this.types,
+    this.vicinity,
   });
 
   Results.fromJson(dynamic json) {
-    if (json['address_components'] != null) {
-      addressComponents = [];
-      json['address_components'].forEach((v) {
-        addressComponents?.add(AddressComponents.fromJson(v));
+    geometry = json['geometry'] != null ? Geometry.fromJson(json['geometry']) : null;
+    icon = json['icon'];
+    iconBackgroundColor = json['icon_background_color'];
+    iconMaskBaseUri = json['icon_mask_base_uri'];
+    name = json['name'];
+    if (json['photos'] != null) {
+      photos = [];
+      json['photos'].forEach((v) {
+        photos?.add(Photos.fromJson(v));
       });
     }
-    formattedAddress = json['formatted_address'];
-    geometry = json['geometry'] != null ? Geometry.fromJson(json['geometry']) : null;
-    partialMatch = json['partial_match'];
     placeId = json['place_id'];
+    reference = json['reference'];
+    scope = json['scope'];
     types = json['types'] != null ? json['types'].cast<String>() : [];
+    vicinity = json['vicinity'];
   }
 
-  List<AddressComponents>? addressComponents;
-  String? formattedAddress;
   Geometry? geometry;
-  bool? partialMatch;
+  String? icon;
+  String? iconBackgroundColor;
+  String? iconMaskBaseUri;
+  String? name;
+  List<Photos>? photos;
   String? placeId;
+  String? reference;
+  String? scope;
   List<String>? types;
+  String? vicinity;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (addressComponents != null) {
-      map['address_components'] = addressComponents?.map((v) => v.toJson()).toList();
-    }
-    map['formatted_address'] = formattedAddress;
     if (geometry != null) {
       map['geometry'] = geometry?.toJson();
     }
-    map['partial_match'] = partialMatch;
+    map['icon'] = icon;
+    map['icon_background_color'] = iconBackgroundColor;
+    map['icon_mask_base_uri'] = iconMaskBaseUri;
+    map['name'] = name;
+    if (photos != null) {
+      map['photos'] = photos?.map((v) => v.toJson()).toList();
+    }
     map['place_id'] = placeId;
+    map['reference'] = reference;
+    map['scope'] = scope;
     map['types'] = types;
+    map['vicinity'] = vicinity;
     return map;
   }
 }
 
+Photos photosFromJson(String str) => Photos.fromJson(json.decode(str));
+
+String photosToJson(Photos data) => json.encode(data.toJson());
+
+class Photos {
+  Photos({
+    this.height,
+    this.photoReference,
+    this.width,
+  });
+
+  Photos.fromJson(dynamic json) {
+    height = json['height'];
+    photoReference = json['photo_reference'];
+    width = json['width'];
+  }
+
+  num? height;
+  String? photoReference;
+  num? width;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['height'] = height;
+    map['photo_reference'] = photoReference;
+    map['width'] = width;
+    return map;
+  }
+}
+
+Geometry geometryFromJson(String str) => Geometry.fromJson(json.decode(str));
+
+String geometryToJson(Geometry data) => json.encode(data.toJson());
+
 class Geometry {
   Geometry({
     this.location,
-    this.locationType,
     this.viewport,
   });
 
   Geometry.fromJson(dynamic json) {
     location = json['location'] != null ? Location.fromJson(json['location']) : null;
-    locationType = json['location_type'];
     viewport = json['viewport'] != null ? Viewport.fromJson(json['viewport']) : null;
   }
 
   Location? location;
-  String? locationType;
   Viewport? viewport;
 
   Map<String, dynamic> toJson() {
@@ -96,13 +161,16 @@ class Geometry {
     if (location != null) {
       map['location'] = location?.toJson();
     }
-    map['location_type'] = locationType;
     if (viewport != null) {
       map['viewport'] = viewport?.toJson();
     }
     return map;
   }
 }
+
+Viewport viewportFromJson(String str) => Viewport.fromJson(json.decode(str));
+
+String viewportToJson(Viewport data) => json.encode(data.toJson());
 
 class Viewport {
   Viewport({
@@ -130,6 +198,10 @@ class Viewport {
   }
 }
 
+Southwest southwestFromJson(String str) => Southwest.fromJson(json.decode(str));
+
+String southwestToJson(Southwest data) => json.encode(data.toJson());
+
 class Southwest {
   Southwest({
     this.lat,
@@ -151,6 +223,10 @@ class Southwest {
     return map;
   }
 }
+
+Northeast northeastFromJson(String str) => Northeast.fromJson(json.decode(str));
+
+String northeastToJson(Northeast data) => json.encode(data.toJson());
 
 class Northeast {
   Northeast({
@@ -174,6 +250,10 @@ class Northeast {
   }
 }
 
+Location locationFromJson(String str) => Location.fromJson(json.decode(str));
+
+String locationToJson(Location data) => json.encode(data.toJson());
+
 class Location {
   Location({
     this.lat,
@@ -192,32 +272,6 @@ class Location {
     final map = <String, dynamic>{};
     map['lat'] = lat;
     map['lng'] = lng;
-    return map;
-  }
-}
-
-class AddressComponents {
-  AddressComponents({
-    this.longName,
-    this.shortName,
-    this.types,
-  });
-
-  AddressComponents.fromJson(dynamic json) {
-    longName = json['long_name'];
-    shortName = json['short_name'];
-    types = json['types'] != null ? json['types'].cast<String>() : [];
-  }
-
-  String? longName;
-  String? shortName;
-  List<String>? types;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['long_name'] = longName;
-    map['short_name'] = shortName;
-    map['types'] = types;
     return map;
   }
 }
