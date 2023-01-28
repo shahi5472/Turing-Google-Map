@@ -1,16 +1,33 @@
-# turing_google_map
+# Turing Google Map
 
-A new Flutter project.
+<br>
 
-## Getting Started
+[Download Apk](apk/app-release.apk)
 
-This project is a starting point for a Flutter application.
+<br>
 
-A few resources to get you started if this is your first Flutter project:
+## Turing Google Map Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<img src="screenshots/screenshot_1.jpeg" width="200" height="400" />
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="screenshots/screenshot_2.jpeg" width="200" height="400" />
+
+<img src="screenshots/screenshot_3.jpeg" width="200" height="400" />
+
+<img src="screenshots/screenshot_4.jpeg" width="200" height="400" />
+
+<img src="screenshots/screenshot_5.jpeg" width="200" height="400" />
+
+<br>
+
+## Dependencies
+
+- Flutter Bloc (For state management)
+- Google Maps Flutter
+- Permission Handler
+- Geo Locator
+- Dio
+- Get it (For Dependence injection)
+- DatZ
+- Equatable
+- Connectivity Plus
