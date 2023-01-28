@@ -8,11 +8,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:turing_google_map/core/features/nearby_search/presentation/home/bloc/place_cubit.dart';
+import 'package:turing_google_map/core/features/nearby_search/presentation/home/widgets/loader_view.dart';
 import 'package:turing_google_map/core/resources/utils.dart';
 import 'package:turing_google_map/core/route_arguments.dart';
 import 'package:turing_google_map/core/route_name.dart';
 
-import '../widgets/loader_view.dart';
 import '../widgets/searchbar_container.dart';
 
 class HomeScreen extends StatefulWidget {

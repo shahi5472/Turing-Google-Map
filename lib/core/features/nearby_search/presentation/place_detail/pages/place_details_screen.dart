@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turing_google_map/core/features/nearby_search/presentation/place_detail/bloc/place_detail_cubit.dart';
+import 'package:turing_google_map/core/features/nearby_search/presentation/place_detail/widgets/loader_view.dart';
 import 'package:turing_google_map/core/remote_urls.dart';
 import 'package:turing_google_map/core/route_arguments.dart';
-
-import '../../home/widgets/loader_view.dart';
 
 class PlaceDetailScreen extends StatefulWidget {
   const PlaceDetailScreen({Key? key, required this.args}) : super(key: key);
