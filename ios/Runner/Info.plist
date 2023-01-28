@@ -47,5 +47,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Turing Google Map needs access to location for showing the near by centers.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Turing Google Map needs access to location for showing the near by centers.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Turing Google Map uses your location for showing the near by centers.</string>
 </dict>
 </plist>
