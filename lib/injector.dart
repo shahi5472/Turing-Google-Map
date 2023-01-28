@@ -5,15 +5,16 @@ import 'package:turing_google_map/core/features/nearby_search/data/datasoruces/p
 import 'package:turing_google_map/core/features/nearby_search/data/repositories/place_remote_repository_impl.dart';
 import 'package:turing_google_map/core/features/nearby_search/domain/repositories/place_repository.dart';
 import 'package:turing_google_map/core/features/nearby_search/domain/usecases/place_use_case.dart';
+import 'package:turing_google_map/core/features/nearby_search/presentation/home/bloc/place_cubit.dart';
+import 'package:turing_google_map/core/features/nearby_search/presentation/place_detail/bloc/place_detail_cubit.dart';
 import 'package:turing_google_map/core/network_checker/network_checker.dart';
-
-import 'core/features/nearby_search/presentation/bloc/place_cubit.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> init() async {
   // Bloc
   getIt.registerFactory<PlaceCubit>(() => PlaceCubit(getIt<PlaceUseCase>()));
+  getIt.registerFactory<PlaceDetailCubit>(() => PlaceDetailCubit(getIt<PlaceUseCase>()));
 
   // Use cases
   getIt.registerLazySingleton<PlaceUseCase>(() => PlaceUseCase(getIt<PlaceRepository>()));

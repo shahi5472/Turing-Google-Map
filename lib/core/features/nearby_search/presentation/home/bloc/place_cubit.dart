@@ -12,6 +12,7 @@ class PlaceCubit extends Cubit<PlaceState> {
   PlaceCubit(this._useCase) : super(PlaceInitial());
 
   Future<void> nearByPlace(LatLng latLng, String type) async {
+    emit(PlaceLoading());
     final result = await _useCase.nearByPlace(latLng, type);
     result.fold(
       (failure) => emit(PlaceError(failure.message)),

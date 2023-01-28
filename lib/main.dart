@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turing_google_map/core/features/nearby_search/presentation/bloc/place_cubit.dart';
+import 'package:turing_google_map/core/features/nearby_search/presentation/home/bloc/place_cubit.dart';
+import 'package:turing_google_map/core/features/nearby_search/presentation/place_detail/bloc/place_detail_cubit.dart';
 import 'package:turing_google_map/core/route_name.dart';
 import 'injector.dart' as injector;
-
-const mapKey = "";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +20,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<PlaceCubit>(
           create: (BuildContext context) => injector.getIt<PlaceCubit>(),
+        ),
+        BlocProvider<PlaceDetailCubit>(
+          create: (BuildContext context) => injector.getIt<PlaceDetailCubit>(),
         ),
       ],
       child: MaterialApp(

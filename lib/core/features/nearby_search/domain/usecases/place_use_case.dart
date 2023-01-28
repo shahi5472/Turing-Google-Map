@@ -12,4 +12,8 @@ class PlaceUseCase {
   Future<Either<Failure, List<PlaceEntity>>> nearByPlace(LatLng latLng, String type) async {
     return await placeRepository.getNearbyPlace(latLng, type);
   }
+
+  Future<Either<Failure, PlaceEntity>> getPlaceDetail(String placeId) async {
+    return await placeRepository.getPlaceDetail(placeId);
+  }
 }

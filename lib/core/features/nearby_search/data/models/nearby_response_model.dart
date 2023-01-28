@@ -1,9 +1,3 @@
-import 'dart:convert';
-
-NearbyResponseModel nearbyResponseModelFromJson(String str) => NearbyResponseModel.fromJson(json.decode(str));
-
-String nearbyResponseModelToJson(NearbyResponseModel data) => json.encode(data.toJson());
-
 class NearbyResponseModel {
   NearbyResponseModel({
     this.nextPageToken,
@@ -36,10 +30,6 @@ class NearbyResponseModel {
     return map;
   }
 }
-
-Results resultsFromJson(String str) => Results.fromJson(json.decode(str));
-
-String resultsToJson(Results data) => json.encode(data.toJson());
 
 class Results {
   Results({
@@ -108,10 +98,6 @@ class Results {
   }
 }
 
-Photos photosFromJson(String str) => Photos.fromJson(json.decode(str));
-
-String photosToJson(Photos data) => json.encode(data.toJson());
-
 class Photos {
   Photos({
     this.height,
@@ -137,10 +123,6 @@ class Photos {
     return map;
   }
 }
-
-Geometry geometryFromJson(String str) => Geometry.fromJson(json.decode(str));
-
-String geometryToJson(Geometry data) => json.encode(data.toJson());
 
 class Geometry {
   Geometry({
@@ -168,10 +150,6 @@ class Geometry {
   }
 }
 
-Viewport viewportFromJson(String str) => Viewport.fromJson(json.decode(str));
-
-String viewportToJson(Viewport data) => json.encode(data.toJson());
-
 class Viewport {
   Viewport({
     this.northeast,
@@ -198,10 +176,6 @@ class Viewport {
   }
 }
 
-Southwest southwestFromJson(String str) => Southwest.fromJson(json.decode(str));
-
-String southwestToJson(Southwest data) => json.encode(data.toJson());
-
 class Southwest {
   Southwest({
     this.lat,
@@ -224,10 +198,6 @@ class Southwest {
   }
 }
 
-Northeast northeastFromJson(String str) => Northeast.fromJson(json.decode(str));
-
-String northeastToJson(Northeast data) => json.encode(data.toJson());
-
 class Northeast {
   Northeast({
     this.lat,
@@ -249,10 +219,6 @@ class Northeast {
     return map;
   }
 }
-
-Location locationFromJson(String str) => Location.fromJson(json.decode(str));
-
-String locationToJson(Location data) => json.encode(data.toJson());
 
 class Location {
   Location({

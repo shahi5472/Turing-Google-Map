@@ -7,8 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:turing_google_map/core/features/nearby_search/presentation/bloc/place_cubit.dart';
+import 'package:turing_google_map/core/features/nearby_search/presentation/home/bloc/place_cubit.dart';
 import 'package:turing_google_map/core/resources/utils.dart';
+import 'package:turing_google_map/core/route_arguments.dart';
+import 'package:turing_google_map/core/route_name.dart';
+
+import '../widgets/loader_view.dart';
+import '../widgets/searchbar_container.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController searchEditController = TextEditingController(text: "restaurant");
+  TextEditingController searchEditController = TextEditingController();
 
   final Completer<GoogleMapController> _controller = Completer();
 
@@ -59,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void changeCameraPosition(LatLng latLng) async {
     GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newLatLng(latLng));
-    setState(() {}); //
+    setState(() {});
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -67,97 +72,59 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void onSearchListener(String input) async {
-    context.read<PlaceCubit>().nearByPlace(_centerLatLng, input);
+    FocusScope.of(context).unfocus();
+    context.read<PlaceCubit>().nearByPlace(_centerLatLng, input.trim());
+  }
+
+  void onTap(String placeId) {
+    Navigator.of(context).pushNamed(
+      RouteNames.placeDetailScreen,
+      arguments: RouteArguments(placeId: placeId),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Turing Google Map"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search_outlined),
-          ),
-        ],
-      ),
-      body: Stack(
-        children: [
-          BlocBuilder<PlaceCubit, PlaceState>(
-            builder: (context, state) {
-              List<Marker> markerList = [];
-              if (state is PlaceLoaded) {
-                markerList.addAll(Utils.placeToMarker(state.placeList));
-              }
-              return GoogleMap(
+      appBar: AppBar(title: const Text("Turing Google Map")),
+      body: BlocBuilder<PlaceCubit, PlaceState>(
+        builder: (context, state) {
+          List<Marker> markerList = [];
+          if (state is PlaceLoaded) {
+            markerList.addAll(Utils.placeToMarker(state.placeList, onTap: onTap));
+          }
+          return Stack(
+            children: [
+              GoogleMap(
                 zoomControlsEnabled: false,
                 onMapCreated: _onMapCreated,
                 initialCameraPosition: CameraPosition(
                   target: _centerLatLng,
-                  zoom: 16.0,
+                  zoom: 14.0,
                 ),
                 onTap: changeCameraPosition,
                 markers: Set<Marker>.of(markerList),
-              );
-            },
-          ),
-          Positioned(
-            bottom: 16,
-            right: 16,
-            child: Container(
-              height: 40,
-              width: 40,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black38,
-                    offset: Offset(1, 1),
-                    blurRadius: 10,
-                  ),
-                ],
               ),
-              child: IconButton(
-                icon: const Icon(Icons.location_history),
-                onPressed: _getCurrentLatLng,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 20,
-            right: 20,
-            top: 25,
-            child: Container(
-              height: 56,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black38,
-                    offset: Offset(1, 1),
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Center(
-                child: TextFormField(
-                  textInputAction: TextInputAction.search,
+              Positioned(
+                left: 20,
+                right: 20,
+                top: 25,
+                child: SearchbarContainer(
                   controller: searchEditController,
                   onFieldSubmitted: onSearchListener,
-                  decoration: const InputDecoration(
-                    hintText: "Search your place",
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                  ),
                 ),
               ),
-            ),
-          ),
-        ],
+              if (state is PlaceLoading)
+                const Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: LoaderView(),
+                ),
+            ],
+          );
+        },
       ),
     );
   }

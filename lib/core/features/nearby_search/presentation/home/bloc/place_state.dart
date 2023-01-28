@@ -31,3 +31,5 @@ class PlaceLoaded extends PlaceState {
   @override
   List<Object?> get props => [placeList];
 }
+
+

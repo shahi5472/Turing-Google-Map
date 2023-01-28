@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -26,7 +27,7 @@ class PlaceRemoteDataSourceImpl extends PlaceRemoteDataSource {
       log(response.statusMessage.toString());
       log(response.data.toString());
       log(response.statusCode.toString());
-      return nearbyResponseModelFromJson(response.data.toString());
+      return NearbyResponseModel.fromJson(response.data);
     } catch (e) {
       log(e.toString());
       throw Exception(e);
@@ -37,9 +38,14 @@ class PlaceRemoteDataSourceImpl extends PlaceRemoteDataSource {
   Future<PlaceDetailResponseModel> getPlaceDetail(String placeId) async {
     try {
       final url = RemoteUrls.placeDetailApi(placeId);
+      log(url);
       final response = await _dio.get(url);
+      log(response.statusMessage.toString());
+      log(response.data.toString());
+      log(response.statusCode.toString());
       return PlaceDetailResponseModel.fromJson(response.data);
     } catch (e) {
+      log(e.toString());
       throw Exception(e);
     }
   }

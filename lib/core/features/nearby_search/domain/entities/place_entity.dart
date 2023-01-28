@@ -6,14 +6,16 @@ class PlaceEntity extends Equatable {
   LatLng? latLng;
   String? placeId;
   String? address;
+  String? photoReference;
+  double? width;
 
-  PlaceEntity({this.name, this.latLng, this.placeId, this.address});
+  PlaceEntity({this.name, this.latLng, this.placeId, this.address, this.photoReference, this.width});
 
   @override
-  List<Object?> get props => [name, latLng, placeId, address];
+  List<Object?> get props => [name, latLng, placeId, address, photoReference, width];
 
   @override
   String toString() {
-    return "Name : $name :: Lat : ${latLng?.latitude}, Lng : ${latLng?.longitude} :: Place : $placeId :: Address : $address";
+    return "Name : $name :: Lat : ${latLng?.latitude}, Lng : ${latLng?.longitude} :: Place : $placeId :: Address : $address :: Photo Reference : $photoReference :: Width : $width";
   }
 }

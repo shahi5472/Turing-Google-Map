@@ -8,7 +8,7 @@ class Utils {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  static List<Marker> placeToMarker(List<PlaceEntity> placeList, {VoidCallback? onTap}) {
+  static List<Marker> placeToMarker(List<PlaceEntity> placeList, {Function(String)? onTap}) {
     List<Marker> markerList = [];
     for (final place in placeList) {
       markerList.add(
@@ -17,9 +17,9 @@ class Utils {
           position: place.latLng ?? const LatLng(0.0, 0.0),
           infoWindow: InfoWindow(
             title: place.name,
-            snippet: place.address,
+            snippet: place.address ?? "Lat: ${place.latLng?.latitude}\nLng: ${place.latLng?.longitude}",
           ),
-          onTap: onTap,
+          onTap: place.placeId != null ? () => onTap?.call(place.placeId!) : null,
         ),
       );
     }

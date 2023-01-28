@@ -32,6 +32,15 @@ class PlaceRemoteRepositoryImpl extends PlaceRepository {
 
   @override
   Future<Either<Failure, PlaceEntity>> getPlaceDetail(String placeId) async {
-    throw UnimplementedError();
+    if (await networkChecker.isConnected()) {
+      try {
+        final result = await placeRemoteDataSource.getPlaceDetail(placeId);
+        return Right(PlaceMapper.placeDetailsModelToEntity(result));
+      } catch (e) {
+        return Left(ServerFailure(e.toString()));
+      }
+    } else {
+      return const Left(ServerFailure("No Internet connection"));
+    }
   }
 }
